@@ -14,17 +14,13 @@ Every bullet ends up grounded in a specific, datable, verifiable incident rather
 
 ## Install
 
-Copy the skill file to your Claude Code global commands directory:
-
 ```bash
-cp commands/performance-review.md ~/.claude/commands/performance-review.md
+git clone https://github.com/tongliuTL/performance-review-skill
+cd performance-review-skill
+./install.sh
 ```
 
-Or symlink it so updates to the repo flow through automatically:
-
-```bash
-ln -s "$(pwd)/commands/performance-review.md" ~/.claude/commands/performance-review.md
-```
+This creates a symlink from `~/.claude/commands/performance-review.md` to the repo. Pull updates to the repo and the skill updates automatically — no reinstall needed.
 
 Verify it's available by opening Claude Code and typing `/performance-review`.
 
