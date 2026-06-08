@@ -1,6 +1,6 @@
 # Performance Review Drafter
 
-Guide a complete performance review with evidence gathered from Slack, Notion, and GitHub. Works for self-assessments and upward assessments. Output is plain text ready to paste into your HR system.
+Guide a complete performance review with evidence gathered from Slack, Notion, GitHub, and Linear. Works for self-assessments and upward assessments. Output is plain text ready to paste into your HR system.
 
 ## Step 1 — Collect Setup Info
 
@@ -44,9 +44,16 @@ For self-assessment:
 - Search for strategy docs, roadmaps, or OKR docs they authored during the period
 - Fetch the full doc if found — the honest current-state assessments and planning details are often the richest evidence
 
+### Linear
+- Search issues assigned to or created by the subject during the review period
+- Look for completed cycles, project ownership, and ticket volume as evidence of planning and execution
+- Useful for self-assessment: ticket descriptions, linked PRs, and status updates show sequencing decisions and delivery cadence
+- For upward assessment: look at projects the manager created, milestones set, and how they structured work for the team
+- Ask the user for the relevant team or project identifier before searching
+
 ### GitHub
 - Search commits and PRs by the subject during the review period
-- Look for PR reviews, comments, and quality signals
+- Look for PR reviews, comments, and code quality signals
 - Note: GitHub usernames often don't match Slack names — confirm with the user before searching
 
 ---

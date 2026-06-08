@@ -1,6 +1,6 @@
 # Performance Review Skill for Claude Code
 
-A Claude Code custom command that guides a complete performance review cycle — self-assessment or upward assessment — with evidence gathered from Slack, Notion, and GitHub.
+A Claude Code custom command that guides a complete performance review cycle — self-assessment or upward assessment — with evidence gathered from Slack, Notion, GitHub, and Linear.
 
 Every bullet ends up grounded in a specific, datable, verifiable incident rather than generic claims. Works with any competency framework.
 
@@ -46,6 +46,7 @@ The following MCP integrations need to be connected in Claude Code for evidence 
 
 - **Slack** — searches messages by sender, date, and keyword
 - **Notion** — fetches 1:1 notes and strategy documents
+- **Linear** — searches tickets, projects, and cycles for delivery and planning evidence
 - **GitHub** — searches commits and PRs (optional but useful for self-assessments)
 
 ## How It Works
