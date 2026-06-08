@@ -1,8 +1,8 @@
 # Performance Review Skill for Claude Code
 
-A Claude Code custom command that guides a complete Namely performance review cycle — self-assessment or upward assessment — with evidence gathered from Slack, Notion, and GitHub.
+A Claude Code custom command that guides a complete performance review cycle — self-assessment or upward assessment — with evidence gathered from Slack, Notion, and GitHub.
 
-Every bullet ends up grounded in a specific, datable, verifiable incident rather than generic claims. Works for any Namely-style competency framework.
+Every bullet ends up grounded in a specific, datable, verifiable incident rather than generic claims. Works with any competency framework.
 
 ## What It Does
 
@@ -64,7 +64,7 @@ The skill is a single markdown file that Claude Code loads as a system prompt wh
 The skill is designed to be adapted. Common customisations:
 
 - **Different rating scale** — edit the scale labels in the skill file if your company uses different terminology
-- **Different HR system** — remove the Namely-specific output format notes and replace with your system's requirements
+- **Different HR system** — the output format section uses plain text by default; adapt the format block to match your system's requirements
 - **Additional evidence sources** — add Linear, Jira, or other MCP tools to the evidence gathering section
 - **Company-specific competencies** — the skill asks the user to paste their competency list at the start of each session, so no customisation needed for this
 

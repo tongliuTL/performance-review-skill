@@ -1,6 +1,6 @@
-# Performance Review Drafter (Namely)
+# Performance Review Drafter
 
-Guide a complete Namely performance review with evidence gathered from Slack, Notion, and GitHub. Works for self-assessments and upward assessments. Output is plain text ready to paste into Namely.
+Guide a complete performance review with evidence gathered from Slack, Notion, and GitHub. Works for self-assessments and upward assessments. Output is plain text ready to paste into your HR system.
 
 ## Step 1 — Collect Setup Info
 
@@ -12,6 +12,8 @@ Ask the user for:
 5. Confirm the Namely rating scale: 1=Under Performer, 2=Needs Development, 3=Meets Expectations, 4=Rockstar, 5=Unicorn
 
 Then create a draft file: `./performance_review_[period]_[subject]_draft.md`
+
+Ask the user whether they want to work through all sections in one pass or one at a time.
 
 ---
 
@@ -49,9 +51,24 @@ For self-assessment:
 
 ---
 
-## Step 3 — Drafting Rules
+## Step 3 — Overall Impact
+
+Draft this section first — it sets the frame for everything else.
+
+Write 3-5 plain sentences (no bullets) covering:
+- Headline deliverables with quantified outcomes where possible
+- Business or financial impact
+- Scope and cross-functional reach
+
+Lead with the most concrete result. Avoid adjectives without evidence ("significant," "impactful") — let the numbers speak.
+
+---
+
+## Step 4 — Competency Drafting
 
 Work one competency at a time. Draft, show to user, get approval, write to file. Repeat.
+
+**If evidence is thin for a competency:** say so explicitly rather than drafting from memory. Tell the user what searches returned and suggest they paste relevant Slack messages or Notion excerpts directly. Never fill a bullet with a claim you cannot trace to a specific search result.
 
 **Content rules:**
 1. 3 bullets per section, each covering a different observable from the competency definition
@@ -60,7 +77,7 @@ Work one competency at a time. Draft, show to user, get approval, write to file.
 4. For upward assessment: never attribute the assessee's own work or initiative to the manager. If unclear who initiated something, ask the user before including it.
 5. Quote discipline: only use verbatim quotes found in search results. If you can't find the exact message, describe the behavior without quoting. Note the channel type (DM vs public) so the user knows what's easily verifiable.
 
-**Format rules (Namely is plain text — no markdown):**
+**Format (plain text — no markdown):**
 ```
 COMPETENCY: [Name] | Rating: [N] - [Label]
 
@@ -69,11 +86,9 @@ COMPETENCY: [Name] | Rating: [N] - [Label]
 - [Bullet 3]
 ```
 
-**Overall Impact** is a narrative section (no bullets) — write 3-5 sentences covering headline results, business impact, and scope. Lead with the most quantifiable outcome.
-
 ---
 
-## Step 4 — Validation Checklist
+## Step 5 — Validation Checklist
 
 Before presenting each section to the user, verify:
 - Each bullet names a specific incident (not a generic pattern claim)
@@ -84,7 +99,7 @@ Before presenting each section to the user, verify:
 
 ---
 
-## Step 5 — File Output
+## Step 6 — File Output
 
 Write each approved section to the draft file immediately after user confirms. Do not batch writes.
 
