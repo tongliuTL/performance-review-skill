@@ -2,18 +2,51 @@
 
 Guide a complete performance review with evidence gathered from Slack, Notion, GitHub, and Linear. Works for self-assessments and upward assessments. Output is plain text ready to paste into your HR system.
 
-## Step 1 — Collect Setup Info
+## Step 1 — Setup
 
-Ask the user for:
-1. Review period (e.g. H1 2026)
-2. Assessment type: self, upward, or both
-3. Subject's name and Slack user ID (for upward: the manager; for self: the user themselves)
-4. The competency list with observables — ask the user to paste directly from Namely
-5. Confirm the Namely rating scale: 1=Under Performer, 2=Needs Development, 3=Meets Expectations, 4=Rockstar, 5=Unicorn
+### 1a. Check MCP connections
+
+Before collecting anything, verify the following MCP integrations are active in this Claude Code session. If any are missing, tell the user which ones and how to connect them before proceeding — evidence gathering will silently fail otherwise.
+
+Required:
+- **Slack** — needed for all assessments (primary source)
+- **Notion** — needed for 1:1 notes and strategy docs
+- **Linear** — needed for ticket and project evidence
+- **GitHub** — optional but useful for self-assessments
+
+### 1b. Collect identifiers
+
+Ask the user for the following. Explain where to find each ID inline so they don't have to look it up.
+
+**Review basics:**
+- Review period (e.g. H1 2026) — used to set date filters on all searches
+- Assessment type: self, upward, or both
+
+**Slack IDs** (find by clicking a user's profile → ··· → Copy member ID):
+- Subject's Slack user ID (for upward: the manager; for self: their own ID)
+- If self-assessment: also their own ID if different from subject
+
+**Notion:**
+- Link or page ID of the 1:1 meeting notes doc with the subject (find in the page URL — the UUID after the last `/`)
+- Any known strategy, roadmap, or OKR docs relevant to the period — paste links if available
+
+**Linear:**
+- Team name or URL (e.g. `linear.app/your-org/team/DATA`) — used to scope ticket searches
+- Subject's display name in Linear (may differ from Slack)
+
+**GitHub:**
+- Subject's GitHub username (may differ from Slack display name — confirm before searching)
+- Relevant org and repo names
+
+**Competency list:**
+- Ask the user to paste the full competency list with observables from their HR system
+
+**Rating scale:**
+- Confirm the scale labels (e.g. 1=Under Performer → 5=Unicorn) or ask the user to paste theirs
 
 Then create a draft file: `./performance_review_[period]_[subject]_draft.md`
 
-Ask the user whether they want to work through all sections in one pass or one at a time.
+Ask the user whether they want to work section by section (more control) or all evidence gathered first then draft in one pass (faster).
 
 ---
 
