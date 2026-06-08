@@ -1,0 +1,104 @@
+# Performance Review Drafter (Namely)
+
+Guide a complete Namely performance review with evidence gathered from Slack, Notion, and GitHub. Works for self-assessments and upward assessments. Output is plain text ready to paste into Namely.
+
+## Step 1 — Collect Setup Info
+
+Ask the user for:
+1. Review period (e.g. H1 2026)
+2. Assessment type: self, upward, or both
+3. Subject's name and Slack user ID (for upward: the manager; for self: the user themselves)
+4. The competency list with observables — ask the user to paste directly from Namely
+5. Confirm the Namely rating scale: 1=Under Performer, 2=Needs Development, 3=Meets Expectations, 4=Rockstar, 5=Unicorn
+
+Then create a draft file: `./performance_review_[period]_[subject]_draft.md`
+
+---
+
+## Step 2 — Evidence Gathering
+
+For each competency, search for evidence BEFORE drafting. Use all available MCP tools in parallel.
+
+### Slack (primary source)
+
+For upward assessment:
+- `from:<@MANAGER_SLACK_ID> after:PERIOD_START` in public/private channels and DMs
+- Include `channel_types: public_channel,private_channel,mpim,im`
+- Run 2-3 searches per competency with different keyword angles (see patterns below)
+
+For self-assessment:
+- Search for messages from the user, PRs they opened, and messages referencing their work
+
+**Keyword patterns by competency type:**
+- Communication: 1:1, agenda, takeaway, recognition, kudos, feedback, update
+- Customer Centricity: customer, shipper, client, production, failure, fix, proactive
+- Data Focus: accuracy, metrics, quality, test, standard, governance, definition
+- Product Execution: sync, decision, blocker, priority, migration, milestone, unblock
+- Stakeholder Management: align, expectation, coordinate, engineering, ops, finance
+- Team Leadership: shoutout, trust, accountability, onboarding, pushing, direction
+
+### Notion
+- Search for 1:1 notes between the user and subject
+- Search for strategy docs, roadmaps, or OKR docs they authored during the period
+- Fetch the full doc if found — the honest current-state assessments and planning details are often the richest evidence
+
+### GitHub
+- Search commits and PRs by the subject during the review period
+- Look for PR reviews, comments, and quality signals
+- Note: GitHub usernames often don't match Slack names — confirm with the user before searching
+
+---
+
+## Step 3 — Drafting Rules
+
+Work one competency at a time. Draft, show to user, get approval, write to file. Repeat.
+
+**Content rules:**
+1. 3 bullets per section, each covering a different observable from the competency definition
+2. Every bullet must cite a specific datable incident — channel, approximate date, and what happened
+3. Keep a running list of incidents used across sections. Do not reuse the same story in two sections. A strong review uses 15+ distinct incidents across 7 competencies.
+4. For upward assessment: never attribute the assessee's own work or initiative to the manager. If unclear who initiated something, ask the user before including it.
+5. Quote discipline: only use verbatim quotes found in search results. If you can't find the exact message, describe the behavior without quoting. Note the channel type (DM vs public) so the user knows what's easily verifiable.
+
+**Format rules (Namely is plain text — no markdown):**
+```
+COMPETENCY: [Name] | Rating: [N] - [Label]
+
+- [Bullet 1]
+- [Bullet 2]
+- [Bullet 3]
+```
+
+**Overall Impact** is a narrative section (no bullets) — write 3-5 sentences covering headline results, business impact, and scope. Lead with the most quantifiable outcome.
+
+---
+
+## Step 4 — Validation Checklist
+
+Before presenting each section to the user, verify:
+- Each bullet names a specific incident (not a generic pattern claim)
+- No incident appears in more than one section
+- For upward: no bullet claims the assessee's own contributions belong to the subject
+- All direct quotes were found verbatim in actual search results
+- Output is plain text only (no bold, no headers, no markdown syntax)
+
+---
+
+## Step 5 — File Output
+
+Write each approved section to the draft file immediately after user confirms. Do not batch writes.
+
+When all sections are done, remind the user:
+- Copy each section from the draft file into Namely individually
+- Namely does not render formatting — paste as plain text
+- Double-check rating selections in the UI (they're separate from the text fields)
+
+---
+
+## Common Pitfalls
+
+- **Attribution errors** — the most common mistake in upward assessments. When in doubt, ask who initiated it.
+- **Recycled examples** — track what you've used. Each section should tell a different story.
+- **Generic bullets** — "always communicates clearly" fails the specificity test. "Published structured meeting takeaways to #data_team after every weekly sync (May 2026)" passes.
+- **Unverified quotes** — if a quote came from a DM the user can't easily find, flag it. If you can't locate the source message, describe rather than quote.
+- **Channel blindness** — note which channel each piece of evidence comes from. If the user wasn't in the channel, they can't verify the story from their end.
