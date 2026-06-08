@@ -6,11 +6,11 @@ Every bullet ends up grounded in a specific, datable, verifiable incident rather
 
 ## What It Does
 
-- Searches Slack, Notion, and GitHub for real evidence per competency
+- Searches Slack, Notion, Linear, and GitHub for real evidence per competency
 - Drafts 3 bullets per section, each covering a different observable
 - Tracks evidence across sections to prevent the same story appearing twice
 - Guards against common mistakes: attribution errors, unverified quotes, generic claims
-- Outputs plain text ready to paste into Namely (no markdown)
+- Outputs plain text ready to paste into any HR system (no markdown)
 
 ## Install
 
@@ -36,7 +36,7 @@ Claude will ask for:
 1. Review period (e.g. H1 2026)
 2. Assessment type: self, upward, or both
 3. Subject's Slack user ID
-4. Competency list pasted from Namely
+4. Competency list pasted from your HR system
 
 Then it searches for evidence and drafts each section for your review before writing anything to file.
 
@@ -66,7 +66,7 @@ The skill is designed to be adapted. Common customisations:
 
 - **Different rating scale** — edit the scale labels in the skill file if your company uses different terminology
 - **Different HR system** — the output format section uses plain text by default; adapt the format block to match your system's requirements
-- **Additional evidence sources** — add Linear, Jira, or other MCP tools to the evidence gathering section
+- **Additional evidence sources** — add Jira, Confluence, or other MCP tools beyond the defaults
 - **Company-specific competencies** — the skill asks the user to paste their competency list at the start of each session, so no customisation needed for this
 
 ## Lessons From the Field
