@@ -6,7 +6,9 @@ Guide a complete performance review with evidence gathered from Slack, Notion, G
 
 ### 1a. Check MCP connections
 
-Before collecting anything, verify the following MCP integrations are active in this Claude Code session. If any are missing, tell the user which ones and how to connect them before proceeding — evidence gathering will silently fail otherwise.
+Before collecting anything, verify the following MCP integrations are active in this Claude Code session by checking whether their tools appear in your available tool list. If any are missing, stop and tell the user:
+
+> "The [X] integration is not connected. To connect it: open claude.ai → click your profile → Integrations → find [X] and connect it. Then start a new Claude Code session and run /performance-review again."
 
 Required:
 - **Slack** — needed for all assessments (primary source)
@@ -82,7 +84,7 @@ For self-assessment:
 - Look for completed cycles, project ownership, and ticket volume as evidence of planning and execution
 - Useful for self-assessment: ticket descriptions, linked PRs, and status updates show sequencing decisions and delivery cadence
 - For upward assessment: look at projects the manager created, milestones set, and how they structured work for the team
-- Ask the user for the relevant team or project identifier before searching
+- Use the team identifier and subject display name collected in Step 1
 
 ### GitHub
 - Search commits and PRs by the subject during the review period
@@ -144,8 +146,8 @@ Before presenting each section to the user, verify:
 Write each approved section to the draft file immediately after user confirms. Do not batch writes.
 
 When all sections are done, remind the user:
-- Copy each section from the draft file into Namely individually
-- Namely does not render formatting — paste as plain text
+- Copy each section from the draft file into their HR system individually
+- Most HR systems do not render markdown — paste as plain text
 - Double-check rating selections in the UI (they're separate from the text fields)
 
 ---
