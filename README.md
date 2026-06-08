@@ -58,7 +58,7 @@ The skill is a single markdown file that Claude Code loads as a system prompt wh
 - **Cross-section deduplication** — tracks incidents used so each section tells a different story
 - **Attribution guard** — in upward assessments, flags risk of accidentally crediting the assessee's own work to their manager
 - **Quote verification** — only uses verbatim quotes found in actual search results, and flags DM-sourced quotes the reviewer can't easily verify
-- **Plain text output** — Namely doesn't render markdown; the skill enforces plain text throughout
+- **Plain text output** — most HR systems don't render markdown; the skill enforces plain text throughout
 
 ## Customising
 

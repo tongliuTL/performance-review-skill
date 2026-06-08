@@ -10,11 +10,7 @@ TARGET="$COMMANDS_DIR/performance-review.md"
 
 mkdir -p "$COMMANDS_DIR"
 
-if [ -L "$TARGET" ]; then
-  echo "Updating existing symlink..."
-  rm "$TARGET"
-elif [ -f "$TARGET" ]; then
-  echo "Replacing existing copy with symlink..."
+if [ -L "$TARGET" ] || [ -f "$TARGET" ]; then
   rm "$TARGET"
 fi
 

@@ -2,49 +2,41 @@
 
 Guide a complete performance review with evidence gathered from Slack, Notion, GitHub, and Linear. Works for self-assessments and upward assessments. Output is plain text ready to paste into your HR system.
 
+---
+
 ## Step 1 — Setup
 
-### 1a. Check MCP connections
+### 1a. Verify MCP connections
 
-Before collecting anything, verify the following MCP integrations are active in this Claude Code session by checking whether their tools appear in your available tool list. If any are missing, stop and tell the user:
+Confirm each integration is usable by making a lightweight test call (e.g. search Slack for a single recent message, list a Notion page). Do not just check whether the tool name appears in your list — an integration can be listed but unauthenticated. If a call fails, stop and tell the user:
 
-> "The [X] integration is not connected. To connect it: open claude.ai → click your profile → Integrations → find [X] and connect it. Then start a new Claude Code session and run /performance-review again."
+> "The [X] integration is not connected or authenticated. To fix it: open claude.ai → click your profile → Integrations → reconnect [X]. Then start a new Claude Code session and run /performance-review again."
 
 Required:
-- **Slack** — needed for all assessments (primary source)
-- **Notion** — needed for 1:1 notes and strategy docs
-- **Linear** — needed for ticket and project evidence
-- **GitHub** — optional but useful for self-assessments
+- **Slack** — primary evidence source for all assessment types
+- **Notion** — 1:1 notes and strategy docs
+- **Linear** — ticket and project evidence
+- **GitHub** — optional, most useful for self-assessments
 
 ### 1b. Collect identifiers
 
-Ask the user for the following. Explain where to find each ID inline so they don't have to look it up.
+Gather everything needed before any searching starts. Ask for all of these upfront so the session runs without interruption.
 
-**Review basics:**
-- Review period (e.g. H1 2026) — used to set date filters on all searches
+**Identifiers** (Slack user IDs: click a user's profile → ··· → Copy member ID):
+- Review period (e.g. H1 2026) — sets date filters on all searches
 - Assessment type: self, upward, or both
+- Subject's Slack user ID — for upward: the manager; for self: the user's own ID
+- Subject's GitHub username — note: often differs from Slack display name
+- Subject's display name in Linear — often differs from Slack
+- Linear team name or URL (e.g. `linear.app/your-org/team/DATA`)
 
-**Slack IDs** (find by clicking a user's profile → ··· → Copy member ID):
-- Subject's Slack user ID (for upward: the manager; for self: their own ID)
-- If self-assessment: also their own ID if different from subject
+**Notion docs** (page ID is the UUID at the end of the page URL):
+- Link or ID of the 1:1 meeting notes doc with the subject
+- Any strategy, roadmap, or OKR docs relevant to the period — paste links if available
 
-**Notion:**
-- Link or page ID of the 1:1 meeting notes doc with the subject (find in the page URL — the UUID after the last `/`)
-- Any known strategy, roadmap, or OKR docs relevant to the period — paste links if available
-
-**Linear:**
-- Team name or URL (e.g. `linear.app/your-org/team/DATA`) — used to scope ticket searches
-- Subject's display name in Linear (may differ from Slack)
-
-**GitHub:**
-- Subject's GitHub username (may differ from Slack display name — confirm before searching)
-- Relevant org and repo names
-
-**Competency list:**
-- Ask the user to paste the full competency list with observables from their HR system
-
-**Rating scale:**
-- Confirm the scale labels (e.g. 1=Under Performer → 5=Unicorn) or ask the user to paste theirs
+**Rubric:**
+- Full competency list with observables — ask the user to paste directly from their HR system
+- Rating scale labels — confirm or ask the user to paste (e.g. 1=Under Performer → 5=Unicorn)
 
 Then create a draft file: `./performance_review_[period]_[subject]_draft.md`
 
@@ -54,70 +46,71 @@ Ask the user whether they want to work section by section (more control) or all 
 
 ## Step 2 — Evidence Gathering
 
-For each competency, search for evidence BEFORE drafting. Use all available MCP tools in parallel.
+Gather evidence for **all competencies across all sources in one parallel batch** before drafting anything. Do not interleave evidence gathering with drafting — front-loading this gives complete data for every section and avoids mid-draft interruptions.
+
+Fan out searches across every competency × every source simultaneously.
 
 ### Slack (primary source)
 
-For upward assessment:
-- `from:<@MANAGER_SLACK_ID> after:PERIOD_START` in public/private channels and DMs
-- Include `channel_types: public_channel,private_channel,mpim,im`
-- Run 2-3 searches per competency with different keyword angles (see patterns below)
+For upward assessment: `from:<@SUBJECT_SLACK_ID> after:PERIOD_START` across `public_channel,private_channel,mpim,im`
 
-For self-assessment:
-- Search for messages from the user, PRs they opened, and messages referencing their work
+For self-assessment: search for the user's own messages and messages referencing their work
 
-**Keyword patterns by competency type:**
+Run 2-3 searches per competency using different keyword angles:
 - Communication: 1:1, agenda, takeaway, recognition, kudos, feedback, update
 - Customer Centricity: customer, shipper, client, production, failure, fix, proactive
 - Data Focus: accuracy, metrics, quality, test, standard, governance, definition
 - Product Execution: sync, decision, blocker, priority, migration, milestone, unblock
 - Stakeholder Management: align, expectation, coordinate, engineering, ops, finance
-- Team Leadership: shoutout, trust, accountability, onboarding, pushing, direction
+- Team Leadership: shoutout, trust, accountability, onboarding, direction
 
 ### Notion
-- Search for 1:1 notes between the user and subject
-- Search for strategy docs, roadmaps, or OKR docs they authored during the period
-- Fetch the full doc if found — the honest current-state assessments and planning details are often the richest evidence
+- Fetch the 1:1 notes doc using the ID from Step 1
+- Search for strategy docs, roadmaps, or OKR docs authored during the period
+- Fetch full docs when found — planning details and honest current-state assessments are often the richest evidence
 
 ### Linear
-- Search issues assigned to or created by the subject during the review period
-- Look for completed cycles, project ownership, and ticket volume as evidence of planning and execution
-- Useful for self-assessment: ticket descriptions, linked PRs, and status updates show sequencing decisions and delivery cadence
-- For upward assessment: look at projects the manager created, milestones set, and how they structured work for the team
+- Search issues assigned to or created by the subject during the period
+- Look for completed cycles, project ownership, and milestone structure
+- For self-assessment: ticket descriptions, linked PRs, and status updates show sequencing and delivery decisions
+- For upward assessment: projects the manager created, milestones set, and how they structured work for the team
 - Use the team identifier and subject display name collected in Step 1
 
 ### GitHub
-- Search commits and PRs by the subject during the review period
+- Search commits and PRs by the subject during the period using the GitHub username from Step 1
 - Look for PR reviews, comments, and code quality signals
-- Note: GitHub usernames often don't match Slack names — confirm with the user before searching
 
 ---
 
-## Step 3 — Overall Impact
+## Step 3 — Competency Drafting
 
-Draft this section first — it sets the frame for everything else.
+Work one competency at a time. Draft → show to user → get approval → write to file. Repeat.
 
-Write 3-5 plain sentences (no bullets) covering:
-- Headline deliverables with quantified outcomes where possible
-- Business or financial impact
-- Scope and cross-functional reach
+**If evidence is thin for a competency**, do not draft from memory. Work through this sequence first:
+1. Try alternate keyword angles (see Step 2 patterns)
+2. Widen the date range slightly beyond the review period
+3. Check an adjacent source (e.g. if Slack is thin, try Notion or Linear)
+4. Ask the user to paste specific messages or links they remember
 
-Lead with the most concrete result. Avoid adjectives without evidence ("significant," "impactful") — let the numbers speak.
+Only after exhausting these should you tell the user evidence is sparse for this section.
 
----
+**Attribution discipline (upward assessments):**
+Never attribute the assessee's own work or initiative to the manager. Be especially suspicious when:
+- The evidence mentions both people in the same message
+- The assessee is described as "supporting," "helping," or "enabling" rather than owning
+- The source is a manager's own status update about something the IC built
 
-## Step 4 — Competency Drafting
+When in doubt, ask the user who initiated it before drafting.
 
-Work one competency at a time. Draft, show to user, get approval, write to file. Repeat.
+**Source discipline:**
+Only use claims you can trace to a specific search result. For direct quotes: use verbatim text only. For paraphrases: the summary must not shift meaning, sentiment, or scope beyond what the source supports — if you cannot write a paraphrase you are confident is accurate, quote directly or describe the behavior without quoting. Note the channel type (DM vs. public) so the user knows what is easily verifiable.
 
-**If evidence is thin for a competency:** say so explicitly rather than drafting from memory. Tell the user what searches returned and suggest they paste relevant Slack messages or Notion excerpts directly. Never fill a bullet with a claim you cannot trace to a specific search result.
+**Cross-section uniqueness:**
+Keep a running list of incidents used. Do not reuse the same story in two sections. A strong review uses 15+ distinct incidents across 7 competencies.
 
-**Content rules:**
-1. 3 bullets per section, each covering a different observable from the competency definition
-2. Every bullet must cite a specific datable incident — channel, approximate date, and what happened
-3. Keep a running list of incidents used across sections. Do not reuse the same story in two sections. A strong review uses 15+ distinct incidents across 7 competencies.
-4. For upward assessment: never attribute the assessee's own work or initiative to the manager. If unclear who initiated something, ask the user before including it.
-5. Quote discipline: only use verbatim quotes found in search results. If you can't find the exact message, describe the behavior without quoting. Note the channel type (DM vs public) so the user knows what's easily verifiable.
+**Content per bullet:**
+- 3 bullets per section, each covering a different observable from the competency definition
+- Every bullet names a specific datable incident — channel, approximate date, what happened
 
 **Format (plain text — no markdown):**
 ```
@@ -130,14 +123,27 @@ COMPETENCY: [Name] | Rating: [N] - [Label]
 
 ---
 
-## Step 5 — Validation Checklist
+## Step 4 — Overall Impact
 
-Before presenting each section to the user, verify:
-- Each bullet names a specific incident (not a generic pattern claim)
+Draft this section **last**, after all competencies are complete — it summarises the full picture and is most accurate when written from the finished drafts.
+
+Write 3-5 plain sentences (no bullets) covering:
+- Headline deliverables with quantified outcomes where possible
+- Business or financial impact
+- Scope and cross-functional reach
+
+Lead with the most concrete result. Avoid adjectives without evidence ("significant," "impactful") — let the numbers carry it.
+
+---
+
+## Step 5 — Validation
+
+Before presenting each section, verify:
+- Each bullet names a specific incident, not a generic pattern claim
 - No incident appears in more than one section
-- For upward: no bullet claims the assessee's own contributions belong to the subject
-- All direct quotes were found verbatim in actual search results
-- Output is plain text only (no bold, no headers, no markdown syntax)
+- For upward: no bullet attributes the assessee's own contributions to the subject
+- All claims are traceable to a specific search result
+- Output is plain text only (no bold, headers, or markdown syntax)
 
 ---
 
@@ -148,14 +154,14 @@ Write each approved section to the draft file immediately after user confirms. D
 When all sections are done, remind the user:
 - Copy each section from the draft file into their HR system individually
 - Most HR systems do not render markdown — paste as plain text
-- Double-check rating selections in the UI (they're separate from the text fields)
+- Double-check rating selections in the UI (they are separate from the text fields)
 
 ---
 
 ## Common Pitfalls
 
 - **Attribution errors** — the most common mistake in upward assessments. When in doubt, ask who initiated it.
-- **Recycled examples** — track what you've used. Each section should tell a different story.
-- **Generic bullets** — "always communicates clearly" fails the specificity test. "Published structured meeting takeaways to #data_team after every weekly sync (May 2026)" passes.
-- **Unverified quotes** — if a quote came from a DM the user can't easily find, flag it. If you can't locate the source message, describe rather than quote.
-- **Channel blindness** — note which channel each piece of evidence comes from. If the user wasn't in the channel, they can't verify the story from their end.
+- **Recycled examples** — track what you have used. Each section should tell a different story.
+- **Generic bullets** — "always communicates clearly" fails. "Published structured meeting takeaways to #data_team after every weekly sync (May 2026)" passes.
+- **Paraphrase drift** — subtly shifting meaning, scope, or sentiment when summarising what someone said or did. If you cannot write an accurate paraphrase, quote directly or describe the behavior instead.
+- **Channel blindness** — note which channel evidence comes from. If the user was not in the channel, they cannot verify the story from their end.
